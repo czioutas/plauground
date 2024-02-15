@@ -14,6 +14,24 @@ export class AppLogger extends ConsoleLogger {
     super.log(modifiedMessage, context);
   }
 
+  /**
+   * A log safe method, as it checks the given context and if undefined does not pass it in super
+   * This allows the output to not log another line of `undefined`
+   * @param message 
+   * @param context 
+   */
+  logSafe(message: any, context?: string) {
+    const modifiedMessage = `${message} test`;
+
+    console.log(modifiedMessage, context);
+
+    if (context === undefined) {
+      super.log(modifiedMessage);
+    } else {
+      super.log(modifiedMessage, context);
+    }
+  }
+
   error(message: any, stack?: string, context?: string) {
     const modifiedMessage = `${message} test`;
 
@@ -34,5 +52,27 @@ export class AppLogger extends ConsoleLogger {
     // {
     //   "hey": "you"
     // }
+  }
+
+  /**
+   * A error -log- safe method, as it checks the given context and if undefined does not pass it in super
+   * This allows the output to not log another line of `undefined`
+   * @param message 
+   * @param stack 
+   * @param context 
+   */
+  errorSafe(message: any, stack?: string, context?: string) {
+    const modifiedMessage = `${message} test`;
+
+    console.log(modifiedMessage, stack, context);
+
+    if (stack === undefined && context === undefined)
+    {
+      super.error(modifiedMessage);
+    } else if (context !== undefined) {
+      super.error(modifiedMessage, context);
+    } else if (stack !== undefined) {
+      super.error(modifiedMessage, stack);
+    }
   }
 }

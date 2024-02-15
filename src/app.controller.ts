@@ -10,8 +10,8 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    this.logger.error('error')
-    this.logger.log('I am a random test')
+    this.logger.errorSafe('error')
+    this.logger.logSafe('I am a random test')
     return this.appService.getHello();
   }
 }
